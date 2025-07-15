@@ -601,5 +601,20 @@
         </div>
         <div class="footer-bottom">&copy; 2024 StyleWise. All rights reserved.</div>
     </div>
+    <script>
+        // Check if we have reset password parameters and redirect if needed
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token') || urlParams.get('token_hash');
+        const type = urlParams.get('type');
+        const accessToken = urlParams.get('access_token');
+        const refreshToken = urlParams.get('refresh_token');
+
+        // If we have reset password parameters, redirect to the reset password page
+        if ((token || accessToken) && type === 'recovery') {
+            const newUrl = new URL('/reset-password', window.location.origin);
+            newUrl.search = window.location.search;
+            window.location.href = newUrl.toString();
+        }
+    </script>
 </body>
 </html>
