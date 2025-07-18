@@ -415,6 +415,9 @@
             
             const newPasswordInput = document.getElementById('newPassword');
             if (newPasswordInput) {
+                // Initialize password strength on page load
+                checkPasswordStrength(newPasswordInput.value);
+                
                 newPasswordInput.addEventListener('input', function() {
                     console.log('Password input changed, checking strength...');
                     checkPasswordStrength(this.value);
@@ -451,7 +454,7 @@
                     
                     // Get token from URL
                     const urlParams = new URLSearchParams(window.location.search);
-                    const token = urlParams.get('token') || urlParams.get('token_hash');
+                    const token = urlParams.get('token') || urlParams.get('token_hash') || urlParams.get('access_token');
                     
                     if (!token) {
                         errorMessage.textContent = 'Missing reset token.';
@@ -459,6 +462,7 @@
                         return;
                     }
                     
+                    console.log('Using token for password reset:', token);
                     console.log('Calling Supabase to reset password...');
                     // Call Supabase to update password
                     try {
