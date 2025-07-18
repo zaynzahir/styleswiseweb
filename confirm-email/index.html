@@ -100,8 +100,23 @@
       setState('loading', 'loading');
 
       // Supabase expects access_token and type=email in the URL for confirmation
-      const accessToken = params.get('access_token');
-      const type = params.get('type');
+      function getParam(name) {
+        // Try query string first
+        const params = new URLSearchParams(window.location.search);
+        let value = params.get(name);
+        if (value) return value;
+        // Try hash fragment (e.g. #access_token=...&type=signup)
+        if (window.location.hash) {
+          const hash = window.location.hash.substring(1); // remove '#'
+          const hashParams = new URLSearchParams(hash);
+          value = hashParams.get(name);
+          if (value) return value;
+        }
+        return null;
+      }
+
+      const accessToken = getParam('access_token');
+      const type = getParam('type');
 
       if (type === 'signup' && accessToken) {
         supabase.auth.exchangeCodeForSession(accessToken)
