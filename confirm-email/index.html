@@ -115,6 +115,12 @@
         return null;
       }
 
+      // Check for persistent confirmation state
+      if (sessionStorage.getItem('emailConfirmed') === 'true') {
+        setState('success', 'success');
+        return;
+      }
+
       // Check for Supabase error in hash (e.g. #error=access_denied&error_code=otp_expired)
       function getHashParam(name) {
         if (window.location.hash) {
@@ -129,7 +135,6 @@
       const errorDescription = getHashParam('error_description');
 
       if (errorCode === 'otp_expired') {
-        // Show a more helpful message for expired/used links
         loader.style.display = 'none';
         title.textContent = 'Link Already Used or Expired';
         message.textContent = 'This confirmation link has already been used or has expired.\nIf you have already confirmed your email, you can log in. If not, please request a new confirmation email.';
@@ -146,6 +151,7 @@
             if (error) {
               setState('error', 'error');
             } else {
+              sessionStorage.setItem('emailConfirmed', 'true');
               setState('success', 'success');
             }
           })
