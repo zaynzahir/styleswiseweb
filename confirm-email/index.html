@@ -205,68 +205,64 @@
             return null;
         }
 
-        // Get token and type from either query or hash
-        const token = getParamFromUrl('token') || getParamFromUrl('access_token') || getParamFromUrl('token_hash');
-        const type = getParamFromUrl('type') || 'email';
+        // Get all possible params
+        const accessToken = getParamFromUrl('access_token');
+        const refreshToken = getParamFromUrl('refresh_token');
+        const type = getParamFromUrl('type');
+        const token = getParamFromUrl('token') || getParamFromUrl('token_hash');
 
         function startConfirmation() {
             showState('loading');
             confirmEmail();
         }
 
-        // Handle email confirmation
+        // Handle email confirmation for both magic link/session and legacy OTP
         async function confirmEmail() {
             try {
-                if (!token) {
-                    document.getElementById('errorDescription').textContent = 'Missing confirmation token in URL. Please use the link from your email.';
-                    showState('error');
+                if (type === 'signup' && accessToken && refreshToken) {
+                    // New magic link/session flow
+                    const { data, error } = await supabase.auth.setSession({
+                        access_token: accessToken,
+                        refresh_token: refreshToken
+                    });
+                    if (error) throw error;
+                    showState('success');
                     return;
                 }
-
-                console.log('Calling Supabase verifyOtp with token:', token);
-
-                // Always use type: 'email' for confirmation
-                const { data, error } = await supabase.auth.verifyOtp({
-                    token_hash: token,
-                    type: 'email'
-                });
-
-                console.log('Supabase response:', { data, error });
-
-                if (error) {
-                    if (error.message && error.message.includes('already confirmed')) {
-                        // Show success state for already confirmed emails
-                        showState('success');
-                        return;
+                // Fallback to legacy OTP flow
+                if (token) {
+                    const { data, error } = await supabase.auth.verifyOtp({
+                        token_hash: token,
+                        type: 'email'
+                    });
+                    if (error) {
+                        if (error.message && error.message.includes('already confirmed')) {
+                            showState('success');
+                            return;
+                        }
+                        if (error.message && (error.message.includes('user') || error.message.includes('not found'))) {
+                            document.getElementById('errorDescription').textContent = 'Email not confirmed. This account does not exist or the link is invalid.';
+                            showState('error');
+                            return;
+                        }
+                        throw error;
                     }
-                    // If user not found or similar error, show a special message
-                    if (error.message && (error.message.includes('user') || error.message.includes('not found'))) {
-                        document.getElementById('errorDescription').textContent = 'Email not confirmed. This account does not exist or the link is invalid.';
-                        // Optionally, add a try again button
-                        document.getElementById('errorState').innerHTML += '<br><a href="/" class="btn-primary">Try Again</a>';
-                        showState('error');
-                        return;
-                    }
-                    throw error;
+                    showState('success');
+                    return;
                 }
-
-                // Success: Show the green check and confirmed message
-                showState('success');
+                document.getElementById('errorDescription').textContent = 'Missing confirmation token or session in URL. Please use the link from your email.';
+                showState('error');
             } catch (error) {
                 console.error('Email confirmation error:', error);
-
                 let errorMessage = 'We couldn\'t verify your email address. This could be due to an expired or invalid link.';
-
                 if (error.message && error.message.includes('expired')) {
                     errorMessage = 'This confirmation link has expired. Please request a new confirmation email.';
                 } else if (error.message && error.message.includes('invalid')) {
                     errorMessage = 'This confirmation link is invalid. Please check your email for the correct link.';
                 } else if (error.message && error.message.includes('already confirmed')) {
-                    // Show success state for already confirmed emails
                     showState('success');
                     return;
                 }
-
                 document.getElementById('errorDescription').textContent = errorMessage;
                 showState('error');
             }
