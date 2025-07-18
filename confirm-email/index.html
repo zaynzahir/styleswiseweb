@@ -191,10 +191,23 @@
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImllaGJuZ2x3eHR3eGx2ZWFla25wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY5MTE0NTIsImV4cCI6MjA2MjQ4NzQ1Mn0.652L15y6Nz0xVEWbuIQxbFAeb7yKK7Eravs_wphI2BU';
         const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-        // Get URL parameters
-        const urlParams = new URLSearchParams(window.location.search);
-        const token = urlParams.get('token');
-        const type = urlParams.get('type');
+        // Helper to get params from both query string and hash fragment
+        function getParamFromUrl(name) {
+            // Try query string first
+            const urlParams = new URLSearchParams(window.location.search);
+            let value = urlParams.get(name);
+            if (value) return value;
+            // Try hash fragment
+            if (window.location.hash) {
+                const hashParams = new URLSearchParams(window.location.hash.substring(1));
+                return hashParams.get(name);
+            }
+            return null;
+        }
+
+        // Get token and type from either query or hash
+        const token = getParamFromUrl('token') || getParamFromUrl('access_token') || getParamFromUrl('token_hash');
+        const type = getParamFromUrl('type') || 'email';
 
         // Show loading state initially
         showState('loading');
