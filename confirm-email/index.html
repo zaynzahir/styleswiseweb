@@ -13,15 +13,18 @@
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: white;
+            background: #f8f6ff;
             color: #222;
-            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .confirm-container {
-            max-width: 500px;
+            max-width: 420px;
             width: 100%;
             margin: 0 auto;
-            padding: 40px 32px;
+            padding: 32px 12px;
             text-align: center;
         }
         .confirm-header {
@@ -47,16 +50,17 @@
             margin-bottom: 30px;
         }
         .confirm-card {
-            background: #f8f9ff;
+            background: #fff;
             border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.1);
+            padding: 36px 20px 32px 20px;
+            box-shadow: 0 8px 32px 0 rgba(102, 126, 234, 0.10);
+            border: 2px solid #e8eaff;
         }
         .loading-spinner {
             display: inline-block;
             width: 40px;
             height: 40px;
-            border: 4px solid #f3f3f3;
+            border: 4px solid #e8eaff;
             border-top: 4px solid #667eea;
             border-radius: 50%;
             animation: spin 1s linear infinite;
@@ -75,8 +79,9 @@
             align-items: center;
             justify-content: center;
             margin: 0 auto 20px auto;
-            color: white;
-            font-size: 2rem;
+            color: #fff;
+            font-size: 2.2rem;
+            border: 3px solid #667eea;
         }
         .error-icon {
             width: 60px;
@@ -87,25 +92,27 @@
             align-items: center;
             justify-content: center;
             margin: 0 auto 20px auto;
-            color: white;
-            font-size: 2rem;
+            color: #fff;
+            font-size: 2.2rem;
+            border: 3px solid #667eea;
         }
         .status-message {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 15px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #667eea;
         }
         .status-description {
-            color: #666;
+            color: #555;
             font-size: 1rem;
             line-height: 1.6;
-            margin-bottom: 30px;
+            margin-bottom: 28px;
         }
         .btn-primary {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            padding: 16px 40px;
+            padding: 14px 36px;
             border-radius: 12px;
             font-size: 1.1rem;
             font-weight: 600;
@@ -116,13 +123,13 @@
         }
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.18);
         }
         .btn-secondary {
             background: transparent;
             color: #667eea;
             border: 2px solid #667eea;
-            padding: 16px 40px;
+            padding: 14px 36px;
             border-radius: 12px;
             font-size: 1.1rem;
             font-weight: 600;
@@ -130,7 +137,7 @@
             transition: all 0.3s ease;
             text-decoration: none;
             display: inline-block;
-            margin-left: 15px;
+            margin-left: 12px;
         }
         .btn-secondary:hover {
             background: #667eea;
@@ -139,20 +146,8 @@
         .hidden {
             display: none;
         }
-        @media (max-width: 900px) {
-            .confirm-container {
-                padding-left: 8px;
-                padding-right: 8px;
-            }
-        }
-        @media (max-width: 800px) {
-            .confirm-container { padding: 24px 16px; }
-            .confirm-title { font-size: 2rem; }
-            .confirm-card { padding: 30px 20px; }
-        }
-        @media (max-width: 500px) {
-            .confirm-container { padding: 16px 8px; }
-            .confirm-card { padding: 20px 16px; }
+        @media (max-width: 600px) {
+            .confirm-card { padding: 18px 4px 18px 4px; }
         }
     </style>
 </head>
