@@ -173,7 +173,7 @@
               sessionStorage.setItem('emailConfirmed', 'true');
               setState('success', 'success');
               
-              // Optional: Clear the URL hash to prevent issues
+              // Clear the URL hash to prevent issues
               if (window.location.hash) {
                 history.replaceState(null, null, window.location.pathname);
               }
@@ -184,8 +184,24 @@
             setState('error', 'error');
           });
       } else {
-        console.log('Missing required parameters, showing invalid link');
-        setState('error', 'invalidLink');
+        // Check if we have a valid session (user might be already confirmed)
+        console.log('No valid parameters found, checking current session...');
+        supabase.auth.getSession()
+          .then(({ data: { session }, error }) => {
+            console.log('Session check result:', { session, error });
+            if (session && session.user && session.user.email_confirmed_at) {
+              console.log('User already has confirmed session');
+              sessionStorage.setItem('emailConfirmed', 'true');
+              setState('success', 'success');
+            } else {
+              console.log('No confirmed session found, showing invalid link');
+              setState('error', 'invalidLink');
+            }
+          })
+          .catch((err) => {
+            console.error('Session check error:', err);
+            setState('error', 'invalidLink');
+          });
       }
     });
   </script>
