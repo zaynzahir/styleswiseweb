@@ -321,13 +321,23 @@
         const refreshToken = urlParams.get('refresh_token');
 
         // Debug: Log URL parameters to console
-        console.log('URL Parameters:', {
+        console.log('Reset Password Page - URL Parameters:', {
             token: token,
             type: type,
             accessToken: accessToken,
             refreshToken: refreshToken,
-            fullUrl: window.location.href
+            fullUrl: window.location.href,
+            pathname: window.location.pathname
         });
+
+        // Check if we have the required parameters
+        if (!token && !accessToken) {
+            console.error('No reset token found in URL parameters');
+            document.getElementById('errorMessage').textContent = 'Invalid reset link. Please request a new password reset.';
+            document.getElementById('errorMessage').style.display = 'block';
+        } else {
+            console.log('Reset token found, form should be functional');
+        }
 
         // Check if we're on the right page and have the right parameters
         if (window.location.pathname !== '/reset-password' && (token || accessToken)) {
@@ -335,6 +345,7 @@
             // Redirect to the reset password page with the same parameters
             const newUrl = new URL('/reset-password', window.location.origin);
             newUrl.search = window.location.search;
+            console.log('Redirecting to reset password page:', newUrl.toString());
             window.location.href = newUrl.toString();
         }
 
@@ -356,6 +367,7 @@
         function checkPasswordStrength(password) {
             let strength = 0;
             let feedback = '';
+            
             if (password.length >= 8) strength++;
             if (/[a-z]/.test(password)) strength++;
             if (/[A-Z]/.test(password)) strength++;
@@ -364,6 +376,11 @@
 
             const strengthBar = document.getElementById('strengthBar');
             const strengthText = document.getElementById('strengthText');
+
+            if (!strengthBar || !strengthText) {
+                console.error('Password strength elements not found');
+                return strength;
+            }
 
             if (strength <= 2) {
                 strengthBar.className = 'strength-fill strength-weak';
@@ -380,24 +397,39 @@
             }
 
             strengthText.textContent = `Password strength: ${feedback}`;
+            console.log('Password strength checked:', { strength, feedback, password: password.length });
             return strength;
         }
 
         // Ensure the event is attached after DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('newPassword').addEventListener('input', function() {
-                checkPasswordStrength(this.value);
-            });
+            console.log('DOM loaded, initializing reset password form...');
+            
+            const newPasswordInput = document.getElementById('newPassword');
+            if (newPasswordInput) {
+                newPasswordInput.addEventListener('input', function() {
+                    console.log('Password input changed, checking strength...');
+                    checkPasswordStrength(this.value);
+                });
+                console.log('Password strength listener attached');
+            } else {
+                console.error('New password input not found');
+            }
+            
             const form = document.getElementById('resetForm');
             if (form) {
                 form.addEventListener('submit', async function(e) {
                     e.preventDefault();
+                    console.log('Form submitted, processing password reset...');
+                    
                     const newPassword = document.getElementById('newPassword').value;
                     const confirmPassword = document.getElementById('confirmPassword').value;
                     const errorMessage = document.getElementById('errorMessage');
                     const successMessage = document.getElementById('successMessage');
+                    
                     errorMessage.style.display = 'none';
                     successMessage.style.display = 'none';
+                    
                     if (newPassword !== confirmPassword) {
                         errorMessage.textContent = 'Passwords do not match.';
                         errorMessage.style.display = 'block';
@@ -408,14 +440,18 @@
                         errorMessage.style.display = 'block';
                         return;
                     }
+                    
                     // Get token from URL
                     const urlParams = new URLSearchParams(window.location.search);
                     const token = urlParams.get('token') || urlParams.get('token_hash');
+                    
                     if (!token) {
                         errorMessage.textContent = 'Missing reset token.';
                         errorMessage.style.display = 'block';
                         return;
                     }
+                    
+                    console.log('Calling Supabase to reset password...');
                     // Call Supabase to update password
                     try {
                         const { data, error } = await supabase.auth.verifyOtp({
@@ -423,6 +459,9 @@
                             type: 'recovery',
                             password: newPassword
                         });
+                        
+                        console.log('Supabase response:', { data, error });
+                        
                         if (error) {
                             errorMessage.textContent = error.message || 'Failed to reset password.';
                             errorMessage.style.display = 'block';
@@ -432,10 +471,14 @@
                             form.reset();
                         }
                     } catch (err) {
+                        console.error('Password reset error:', err);
                         errorMessage.textContent = err.message || 'Failed to reset password.';
                         errorMessage.style.display = 'block';
                     }
                 });
+                console.log('Form submit listener attached');
+            } else {
+                console.error('Reset form not found');
             }
         });
     </script>
