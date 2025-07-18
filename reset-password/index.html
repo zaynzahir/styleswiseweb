@@ -409,6 +409,22 @@
             return strength;
         }
 
+        // Initialize password strength immediately if DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function() {
+                const newPasswordInput = document.getElementById('newPassword');
+                if (newPasswordInput) {
+                    checkPasswordStrength(newPasswordInput.value);
+                }
+            });
+        } else {
+            // DOM is already loaded
+            const newPasswordInput = document.getElementById('newPassword');
+            if (newPasswordInput) {
+                checkPasswordStrength(newPasswordInput.value);
+            }
+        }
+
         // Initialize password strength on page load
         document.addEventListener('DOMContentLoaded', function() {
             console.log('DOM loaded, initializing reset password form...');
@@ -432,7 +448,7 @@
             const form = document.getElementById('resetForm');
             if (form) {
                 form.addEventListener('submit', async function(e) {
-                    e.preventDefault();
+                    e.preventDefault(); // CRITICAL: Prevent default form submission
                     console.log('Form submitted, processing password reset...');
                     
                     const newPassword = document.getElementById('newPassword').value;
