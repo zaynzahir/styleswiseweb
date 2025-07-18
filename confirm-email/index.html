@@ -84,7 +84,6 @@
     onConfigReady(function() {
       const config = window.stylewiseConfig;
       const supabase = window.supabase.createClient(config.supabase.url, config.supabase.anonKey);
-      const params = new URLSearchParams(window.location.search);
       const container = document.getElementById('confirm-container');
       const loader = document.getElementById('loader');
       const title = document.getElementById('title');
@@ -97,31 +96,21 @@
         title.className = 'title ' + (msgType === 'success' ? 'success' : msgType === 'error' ? 'error' : '');
       }
 
-      setState('loading', 'loading');
+      // Debug logging
+      console.log('URL:', window.location.href);
+      console.log('Hash:', window.location.hash);
+      console.log('Search:', window.location.search);
 
-      // Supabase expects access_token and type=email in the URL for confirmation
-      function getParam(name) {
-        // Try query string first
-        const params = new URLSearchParams(window.location.search);
-        let value = params.get(name);
-        if (value) return value;
-        // Try hash fragment (e.g. #access_token=...&type=signup)
-        if (window.location.hash) {
-          const hash = window.location.hash.substring(1); // remove '#'
-          const hashParams = new URLSearchParams(hash);
-          value = hashParams.get(name);
-          if (value) return value;
-        }
-        return null;
-      }
+      setState('loading', 'loading');
 
       // Check for persistent confirmation state
       if (sessionStorage.getItem('emailConfirmed') === 'true') {
+        console.log('Found persistent confirmation state');
         setState('success', 'success');
         return;
       }
 
-      // Check for Supabase error in hash (e.g. #error=access_denied&error_code=otp_expired)
+      // Check for Supabase error in hash
       function getHashParam(name) {
         if (window.location.hash) {
           const hash = window.location.hash.substring(1);
@@ -135,6 +124,7 @@
       const errorDescription = getHashParam('error_description');
 
       if (errorCode === 'otp_expired') {
+        console.log('OTP expired error detected');
         loader.style.display = 'none';
         title.textContent = 'Link Already Used or Expired';
         message.textContent = 'This confirmation link has already been used or has expired.\nIf you have already confirmed your email, you can log in. If not, please request a new confirmation email.';
@@ -142,21 +132,59 @@
         return;
       }
 
+      function getParam(name) {
+        // Try query string first
+        const params = new URLSearchParams(window.location.search);
+        let value = params.get(name);
+        if (value) {
+          console.log(`Found ${name} in query string:`, value);
+          return value;
+        }
+        // Try hash fragment
+        if (window.location.hash) {
+          const hash = window.location.hash.substring(1);
+          const hashParams = new URLSearchParams(hash);
+          value = hashParams.get(name);
+          if (value) {
+            console.log(`Found ${name} in hash:`, value);
+            return value;
+          }
+        }
+        console.log(`${name} not found in URL`);
+        return null;
+      }
+
       const accessToken = getParam('access_token');
       const type = getParam('type');
 
+      console.log('Access token:', accessToken ? 'Found' : 'Not found');
+      console.log('Type:', type);
+
       if (type === 'signup' && accessToken) {
+        console.log('Attempting to exchange code for session...');
         supabase.auth.exchangeCodeForSession(accessToken)
-          .then(({ error }) => {
+          .then(({ data, error }) => {
+            console.log('Exchange result:', { data, error });
             if (error) {
+              console.error('Exchange error:', error);
               setState('error', 'error');
             } else {
+              console.log('Exchange successful, setting confirmation flag');
               sessionStorage.setItem('emailConfirmed', 'true');
               setState('success', 'success');
+              
+              // Optional: Clear the URL hash to prevent issues
+              if (window.location.hash) {
+                history.replaceState(null, null, window.location.pathname);
+              }
             }
           })
-          .catch(() => setState('error', 'error'));
+          .catch((err) => {
+            console.error('Exchange catch error:', err);
+            setState('error', 'error');
+          });
       } else {
+        console.log('Missing required parameters, showing invalid link');
         setState('error', 'invalidLink');
       }
     });
