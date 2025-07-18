@@ -115,6 +115,28 @@
         return null;
       }
 
+      // Check for Supabase error in hash (e.g. #error=access_denied&error_code=otp_expired)
+      function getHashParam(name) {
+        if (window.location.hash) {
+          const hash = window.location.hash.substring(1);
+          const hashParams = new URLSearchParams(hash);
+          return hashParams.get(name);
+        }
+        return null;
+      }
+
+      const errorCode = getHashParam('error_code');
+      const errorDescription = getHashParam('error_description');
+
+      if (errorCode === 'otp_expired') {
+        // Show a more helpful message for expired/used links
+        loader.style.display = 'none';
+        title.textContent = 'Link Already Used or Expired';
+        message.textContent = 'This confirmation link has already been used or has expired.\nIf you have already confirmed your email, you can log in. If not, please request a new confirmation email.';
+        title.className = 'title error';
+        return;
+      }
+
       const accessToken = getParam('access_token');
       const type = getParam('type');
 
