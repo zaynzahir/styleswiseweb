@@ -160,6 +160,7 @@
       console.log('Access token:', accessToken ? 'Found' : 'Not found');
       console.log('Type:', type);
 
+      // If we have parameters, try to confirm
       if (type === 'signup' && accessToken) {
         console.log('Attempting to exchange code for session...');
         supabase.auth.exchangeCodeForSession(accessToken)
@@ -184,24 +185,18 @@
             setState('error', 'error');
           });
       } else {
-        // Check if we have a valid session (user might be already confirmed)
-        console.log('No valid parameters found, checking current session...');
-        supabase.auth.getSession()
-          .then(({ data: { session }, error }) => {
-            console.log('Session check result:', { session, error });
-            if (session && session.user && session.user.email_confirmed_at) {
-              console.log('User already has confirmed session');
-              sessionStorage.setItem('emailConfirmed', 'true');
-              setState('success', 'success');
-            } else {
-              console.log('No confirmed session found, showing invalid link');
-              setState('error', 'invalidLink');
-            }
-          })
-          .catch((err) => {
-            console.error('Session check error:', err);
-            setState('error', 'invalidLink');
-          });
+        // No parameters found - this could mean:
+        // 1. User already confirmed and URL was cleared
+        // 2. Invalid link
+        // 3. Page was refreshed after confirmation
+        
+        console.log('No parameters found, checking if user is already confirmed...');
+        
+        // Show a more helpful message instead of immediately showing error
+        loader.style.display = 'none';
+        title.textContent = 'Email Confirmation';
+        message.textContent = 'If you clicked a confirmation link and are seeing this message, your email may have already been confirmed successfully.\n\nYou can now log in to your StyleWise account.';
+        title.className = 'title success';
       }
     });
   </script>
