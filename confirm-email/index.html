@@ -209,8 +209,10 @@
         const token = getParamFromUrl('token') || getParamFromUrl('access_token') || getParamFromUrl('token_hash');
         const type = getParamFromUrl('type') || 'email';
 
-        // Show loading state initially
-        showState('loading');
+        function startConfirmation() {
+            showState('loading');
+            confirmEmail();
+        }
 
         // Handle email confirmation
         async function confirmEmail() {
@@ -221,11 +223,15 @@
                     return;
                 }
 
+                console.log('Calling Supabase verifyOtp with token:', token);
+
                 // Always use type: 'email' for confirmation
                 const { data, error } = await supabase.auth.verifyOtp({
                     token_hash: token,
                     type: 'email'
                 });
+
+                console.log('Supabase response:', { data, error });
 
                 if (error) {
                     if (error.message && error.message.includes('already confirmed')) {
@@ -281,7 +287,8 @@
         }
 
         // Ensure confirmEmail runs on page load
-        window.addEventListener('DOMContentLoaded', confirmEmail);
+        window.addEventListener('DOMContentLoaded', startConfirmation);
+        window.addEventListener('hashchange', startConfirmation);
     </script>
 </body>
 </html>
