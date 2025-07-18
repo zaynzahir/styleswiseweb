@@ -207,16 +207,16 @@
         // Handle email confirmation
         async function confirmEmail() {
             try {
-                if (!token || !type) {
-                    document.getElementById('errorDescription').textContent = 'Missing confirmation token or type in URL. Please use the link from your email.';
+                if (!token) {
+                    document.getElementById('errorDescription').textContent = 'Missing confirmation token in URL. Please use the link from your email.';
                     showState('error');
                     return;
                 }
 
-                // Confirm the email using Supabase
+                // Always use type: 'email' for confirmation
                 const { data, error } = await supabase.auth.verifyOtp({
                     token_hash: token,
-                    type: type || 'email'
+                    type: 'email'
                 });
 
                 if (error) {
