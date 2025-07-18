@@ -341,16 +341,6 @@
             }
         }
 
-        // Check if we're on the right page and have the right parameters
-        if (window.location.pathname !== '/reset-password' && (token || accessToken)) {
-            // We have reset parameters but we're not on the reset page
-            // Redirect to the reset password page with the same parameters
-            const newUrl = new URL('/reset-password', window.location.origin);
-            newUrl.search = window.location.search;
-            console.log('Redirecting to reset password page:', newUrl.toString());
-            window.location.href = newUrl.toString();
-        }
-
         // Password toggle functionality
         function togglePassword(inputId) {
             const input = document.getElementById(inputId);
