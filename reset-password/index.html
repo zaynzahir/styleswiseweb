@@ -297,7 +297,7 @@
                     </button>
                 </div>
             </div>
-            <button type="submit" class="btn-reset" id="resetBtn">Reset Password</button>
+            <button type="button" class="btn-reset" id="resetBtn" onclick="handlePasswordReset()">Reset Password</button>
         </form>
         
         <div class="app-info">
@@ -409,23 +409,97 @@
             return strength;
         }
 
-        // Initialize password strength immediately if DOM is ready
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', function() {
-                const newPasswordInput = document.getElementById('newPassword');
-                if (newPasswordInput) {
-                    checkPasswordStrength(newPasswordInput.value);
+        // Main password reset handler function
+        async function handlePasswordReset() {
+            console.log('Password reset button clicked!');
+            
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const errorMessage = document.getElementById('errorMessage');
+            const successMessage = document.getElementById('successMessage');
+            
+            errorMessage.style.display = 'none';
+            successMessage.style.display = 'none';
+            
+            if (newPassword !== confirmPassword) {
+                errorMessage.textContent = 'Passwords do not match.';
+                errorMessage.style.display = 'block';
+                return;
+            }
+            if (newPassword.length < 8) {
+                errorMessage.textContent = 'Password must be at least 8 characters.';
+                errorMessage.style.display = 'block';
+                return;
+            }
+            
+            // Get token from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const token = urlParams.get('token') || urlParams.get('token_hash') || urlParams.get('access_token');
+            
+            if (!token) {
+                errorMessage.textContent = 'Missing reset token.';
+                errorMessage.style.display = 'block';
+                return;
+            }
+            
+            console.log('Using token for password reset:', token);
+            console.log('Calling Supabase to reset password...');
+            
+            try {
+                // For password reset with recovery token, we need to recover the session first
+                const { data: recoveryData, error: recoveryError } = await supabase.auth.verifyOtp({
+                    token_hash: token,
+                    type: 'recovery'
+                });
+                
+                console.log('Recovery response:', { recoveryData, recoveryError });
+                
+                if (recoveryError) {
+                    console.error('Recovery error:', recoveryError);
+                    errorMessage.textContent = recoveryError.message || 'Invalid or expired reset link. Please request a new password reset.';
+                    errorMessage.style.display = 'block';
+                    return;
                 }
-            });
-        } else {
-            // DOM is already loaded
-            const newPasswordInput = document.getElementById('newPassword');
-            if (newPasswordInput) {
-                checkPasswordStrength(newPasswordInput.value);
+                
+                // Now update the user's password
+                const { data, error } = await supabase.auth.updateUser({
+                    password: newPassword
+                });
+                
+                console.log('Update password response:', { data, error });
+                
+                if (error) {
+                    console.error('Update password error:', error);
+                    errorMessage.textContent = error.message || 'Failed to reset password. Please try again or request a new reset link.';
+                    errorMessage.style.display = 'block';
+                } else {
+                    console.log('Password reset successful!');
+                    successMessage.innerHTML = `
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 6L9 17l-5-5"/>
+                            </svg>
+                            <div>
+                                <strong>Password Updated Successfully!</strong><br>
+                                Your password has been reset. You can now log in to your StyleWise account with your new password.
+                            </div>
+                        </div>
+                    `;
+                    successMessage.style.display = 'block';
+                    
+                    // Hide the form after successful reset
+                    document.getElementById('resetForm').style.display = 'none';
+                    
+                    // Don't clear the form or URL - let the user see the success message
+                }
+            } catch (err) {
+                console.error('Password reset error:', err);
+                errorMessage.textContent = err.message || 'Failed to reset password. Please try again or request a new reset link.';
+                errorMessage.style.display = 'block';
             }
         }
 
-        // Initialize password strength on page load
+        // Initialize everything when DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
             console.log('DOM loaded, initializing reset password form...');
             
@@ -445,102 +519,19 @@
                 console.error('New password input not found');
             }
             
-            const form = document.getElementById('resetForm');
-            if (form) {
-                form.addEventListener('submit', async function(e) {
-                    e.preventDefault(); // CRITICAL: Prevent default form submission
-                    console.log('Form submitted, processing password reset...');
-                    
-                    const newPassword = document.getElementById('newPassword').value;
-                    const confirmPassword = document.getElementById('confirmPassword').value;
-                    const errorMessage = document.getElementById('errorMessage');
-                    const successMessage = document.getElementById('successMessage');
-                    
-                    errorMessage.style.display = 'none';
-                    successMessage.style.display = 'none';
-                    
-                    if (newPassword !== confirmPassword) {
-                        errorMessage.textContent = 'Passwords do not match.';
-                        errorMessage.style.display = 'block';
-                        return;
-                    }
-                    if (newPassword.length < 8) {
-                        errorMessage.textContent = 'Password must be at least 8 characters.';
-                        errorMessage.style.display = 'block';
-                        return;
-                    }
-                    
-                    // Get token from URL
-                    const urlParams = new URLSearchParams(window.location.search);
-                    const token = urlParams.get('token') || urlParams.get('token_hash') || urlParams.get('access_token');
-                    
-                    if (!token) {
-                        errorMessage.textContent = 'Missing reset token.';
-                        errorMessage.style.display = 'block';
-                        return;
-                    }
-                    
-                    console.log('Using token for password reset:', token);
-                    console.log('Calling Supabase to reset password...');
-                    
-                    try {
-                        // For password reset with recovery token, we need to recover the session first
-                        const { data: recoveryData, error: recoveryError } = await supabase.auth.verifyOtp({
-                            token_hash: token,
-                            type: 'recovery'
-                        });
-                        
-                        console.log('Recovery response:', { recoveryData, recoveryError });
-                        
-                        if (recoveryError) {
-                            console.error('Recovery error:', recoveryError);
-                            errorMessage.textContent = recoveryError.message || 'Invalid or expired reset link. Please request a new password reset.';
-                            errorMessage.style.display = 'block';
-                            return;
-                        }
-                        
-                        // Now update the user's password
-                        const { data, error } = await supabase.auth.updateUser({
-                            password: newPassword
-                        });
-                        
-                        console.log('Update password response:', { data, error });
-                        
-                        if (error) {
-                            console.error('Update password error:', error);
-                            errorMessage.textContent = error.message || 'Failed to reset password. Please try again or request a new reset link.';
-                            errorMessage.style.display = 'block';
-                        } else {
-                            console.log('Password reset successful!');
-                            successMessage.innerHTML = `
-                                <div style="display: flex; align-items: center; gap: 10px;">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M20 6L9 17l-5-5"/>
-                                    </svg>
-                                    <div>
-                                        <strong>Password Updated Successfully!</strong><br>
-                                        Your password has been reset. You can now log in to your StyleWise account with your new password.
-                                    </div>
-                                </div>
-                            `;
-                            successMessage.style.display = 'block';
-                            
-                            // Hide the form after successful reset
-                            document.getElementById('resetForm').style.display = 'none';
-                            
-                            // Don't clear the form or URL - let the user see the success message
-                        }
-                    } catch (err) {
-                        console.error('Password reset error:', err);
-                        errorMessage.textContent = err.message || 'Failed to reset password. Please try again or request a new reset link.';
-                        errorMessage.style.display = 'block';
-                    }
-                });
-                console.log('Form submit listener attached');
-            } else {
-                console.error('Reset form not found');
-            }
+            console.log('Reset password form initialized successfully!');
         });
+
+        // Also initialize password strength immediately if DOM is already loaded
+        if (document.readyState !== 'loading') {
+            const newPasswordInput = document.getElementById('newPassword');
+            if (newPasswordInput) {
+                checkPasswordStrength(newPasswordInput.value);
+                newPasswordInput.addEventListener('input', function() {
+                    checkPasswordStrength(this.value);
+                });
+            }
+        }
     </script>
 </body>
 </html> 
