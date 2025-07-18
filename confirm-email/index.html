@@ -215,6 +215,19 @@
                 });
 
                 if (error) {
+                    if (error.message && error.message.includes('already confirmed')) {
+                        // Show success state for already confirmed emails
+                        showState('success');
+                        return;
+                    }
+                    // If user not found or similar error, show a special message
+                    if (error.message && (error.message.includes('user') || error.message.includes('not found'))) {
+                        document.getElementById('errorDescription').textContent = 'Email not confirmed. This account does not exist or the link is invalid.';
+                        // Optionally, add a try again button
+                        document.getElementById('errorState').innerHTML += '<br><a href="/" class="btn-primary">Try Again</a>';
+                        showState('error');
+                        return;
+                    }
                     throw error;
                 }
 
@@ -230,7 +243,9 @@
                 } else if (error.message && error.message.includes('invalid')) {
                     errorMessage = 'This confirmation link is invalid. Please check your email for the correct link.';
                 } else if (error.message && error.message.includes('already confirmed')) {
-                    errorMessage = 'This email has already been confirmed. You can now log in to your account.';
+                    // Show success state for already confirmed emails
+                    showState('success');
+                    return;
                 }
 
                 document.getElementById('errorDescription').textContent = errorMessage;
