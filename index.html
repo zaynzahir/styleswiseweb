@@ -736,10 +736,45 @@
         const accessToken = urlParams.get('access_token');
         const refreshToken = urlParams.get('refresh_token');
 
+        // Also check hash fragment for parameters (Supabase sometimes puts them there)
+        let hashToken = null;
+        let hashType = null;
+        let hashAccessToken = null;
+        let hashRefreshToken = null;
+        
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const hashParams = new URLSearchParams(hash);
+            hashToken = hashParams.get('token') || hashParams.get('token_hash');
+            hashType = hashParams.get('type');
+            hashAccessToken = hashParams.get('access_token');
+            hashRefreshToken = hashParams.get('refresh_token');
+        }
+
+        // Use either query string or hash parameters
+        const finalToken = token || hashToken;
+        const finalType = type || hashType;
+        const finalAccessToken = accessToken || hashAccessToken;
+        const finalRefreshToken = refreshToken || hashRefreshToken;
+
+        console.log('Main page - Checking for reset password parameters:', {
+            queryParams: { token, type, accessToken, refreshToken },
+            hashParams: { hashToken, hashType, hashAccessToken, hashRefreshToken },
+            finalParams: { finalToken, finalType, finalAccessToken, finalRefreshToken }
+        });
+
         // If we have reset password parameters, redirect to the reset password page
-        if ((token || accessToken) && type === 'recovery') {
+        if ((finalToken || finalAccessToken) && finalType === 'recovery') {
+            console.log('Reset password parameters detected, redirecting to reset-password page');
             const newUrl = new URL('/reset-password', window.location.origin);
-            newUrl.search = window.location.search;
+            
+            // Preserve the parameters in the query string for the reset password page
+            if (finalToken) newUrl.searchParams.set('token', finalToken);
+            if (finalType) newUrl.searchParams.set('type', finalType);
+            if (finalAccessToken) newUrl.searchParams.set('access_token', finalAccessToken);
+            if (finalRefreshToken) newUrl.searchParams.set('refresh_token', finalRefreshToken);
+            
+            console.log('Redirecting to:', newUrl.toString());
             window.location.href = newUrl.toString();
         }
     </script>
