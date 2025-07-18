@@ -337,6 +337,14 @@
             document.getElementById('errorMessage').style.display = 'block';
         } else {
             console.log('Reset token found, form should be functional');
+            
+            // Check if the token looks valid (Supabase tokens are long JWT strings)
+            const tokenToCheck = token || accessToken;
+            if (tokenToCheck && tokenToCheck.length < 50) {
+                console.warn('Token appears to be invalid (too short for Supabase JWT)');
+                document.getElementById('errorMessage').textContent = 'This reset link appears to be invalid. Please request a new password reset email.';
+                document.getElementById('errorMessage').style.display = 'block';
+            }
         }
 
         // Check if we're on the right page and have the right parameters
@@ -463,16 +471,32 @@
                         console.log('Supabase response:', { data, error });
                         
                         if (error) {
-                            errorMessage.textContent = error.message || 'Failed to reset password.';
+                            console.error('Supabase error:', error);
+                            errorMessage.textContent = error.message || 'Failed to reset password. Please try again or request a new reset link.';
                             errorMessage.style.display = 'block';
                         } else {
-                            successMessage.textContent = 'Password reset successfully! You can now log in with your new password.';
+                            console.log('Password reset successful!');
+                            successMessage.innerHTML = `
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M20 6L9 17l-5-5"/>
+                                    </svg>
+                                    <div>
+                                        <strong>Password Updated Successfully!</strong><br>
+                                        Your password has been reset. You can now log in to your StyleWise account with your new password.
+                                    </div>
+                                </div>
+                            `;
                             successMessage.style.display = 'block';
-                            form.reset();
+                            
+                            // Hide the form after successful reset
+                            document.getElementById('resetForm').style.display = 'none';
+                            
+                            // Don't clear the form or URL - let the user see the success message
                         }
                     } catch (err) {
                         console.error('Password reset error:', err);
-                        errorMessage.textContent = err.message || 'Failed to reset password.';
+                        errorMessage.textContent = err.message || 'Failed to reset password. Please try again or request a new reset link.';
                         errorMessage.style.display = 'block';
                     }
                 });
