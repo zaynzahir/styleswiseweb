@@ -1,290 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confirm Email - StyleWise</title>
-    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: #f8f6ff;
-            color: #222;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .confirm-container {
-            max-width: 420px;
-            width: 100%;
-            margin: 0 auto;
-            padding: 32px 12px;
-            text-align: center;
-        }
-        .confirm-header {
-            margin-bottom: 40px;
-        }
-        .confirm-title {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #667eea;
-            margin-bottom: 15px;
-            line-height: 1.2;
-        }
-        .confirm-subtitle {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #ff6b35;
-            margin-bottom: 20px;
-        }
-        .confirm-description {
-            color: #666;
-            font-size: 1rem;
-            line-height: 1.6;
-            margin-bottom: 30px;
-        }
-        .confirm-card {
-            background: #fff;
-            border-radius: 20px;
-            padding: 36px 20px 32px 20px;
-            box-shadow: 0 8px 32px 0 rgba(102, 126, 234, 0.10);
-            border: 2px solid #e8eaff;
-        }
-        .loading-spinner {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            border: 4px solid #e8eaff;
-            border-top: 4px solid #667eea;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 20px;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .success-icon {
-            width: 60px;
-            height: 60px;
-            background: #6bcf7f;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px auto;
-            color: #fff;
-            font-size: 2.2rem;
-            border: 3px solid #667eea;
-        }
-        .error-icon {
-            width: 60px;
-            height: 60px;
-            background: #ff6b6b;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px auto;
-            color: #fff;
-            font-size: 2.2rem;
-            border: 3px solid #667eea;
-        }
-        .status-message {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: #667eea;
-        }
-        .status-description {
-            color: #555;
-            font-size: 1rem;
-            line-height: 1.6;
-            margin-bottom: 28px;
-        }
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 14px 36px;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.18);
-        }
-        .btn-secondary {
-            background: transparent;
-            color: #667eea;
-            border: 2px solid #667eea;
-            padding: 14px 36px;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            margin-left: 12px;
-        }
-        .btn-secondary:hover {
-            background: #667eea;
-            color: white;
-        }
-        .hidden {
-            display: none;
-        }
-        @media (max-width: 600px) {
-            .confirm-card { padding: 18px 4px 18px 4px; }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Confirm Email | StyleWise</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/dist/umd/supabase.min.js"></script>
+  <script src="/config.js"></script>
+  <style>
+    body {
+      background: #fff;
+      color: #333;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .container {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(102, 126, 234, 0.12);
+      padding: 2.5rem 2rem;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      border: 2px solid #667eea;
+    }
+    .title {
+      color: #667eea;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    .message {
+      color: #764ba2;
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      white-space: pre-line;
+    }
+    .loader {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #667eea;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 1.5rem auto;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .success {
+      color: #48bb78;
+    }
+    .error {
+      color: #f56565;
+    }
+    @media (max-width: 500px) {
+      .container {
+        padding: 1.5rem 0.5rem;
+      }
+      .title {
+        font-size: 1.4rem;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="confirm-container">
-        <div class="confirm-card">
-            <!-- Loading State -->
-            <div id="loadingState">
-                <div class="loading-spinner"></div>
-                <div class="status-message">Verifying your email...</div>
-                <div class="status-description">
-                    Please wait while we confirm your email address.
-                </div>
-            </div>
-            <!-- Success State -->
-            <div id="successState" class="hidden">
-                <div class="success-icon">✓</div>
-                <div class="status-message">Email Confirmed Successfully!</div>
-                <div class="status-description">
-                    Your email has been verified and your account is now active. 
-                    You can now log in to your StyleWise account and start using all features.
-                </div>
-                <a href="/" class="btn-primary">Go to Home</a>
-            </div>
-            <!-- Error State -->
-            <div id="errorState" class="hidden">
-                <div class="error-icon">✕</div>
-                <div class="status-message">Verification Failed</div>
-                <div class="status-description" id="errorDescription">
-                    We couldn't verify your email address. This could be due to an expired or invalid link.
-                </div>
-                <a href="/" class="btn-primary">Go to Home</a>
-                <a href="mailto:support@styleswise.io" class="btn-secondary">Contact Support</a>
-            </div>
-        </div>
-    </div>
+  <div class="container" id="confirm-container">
+    <div class="loader" id="loader"></div>
+    <div class="title" id="title"></div>
+    <div class="message" id="message"></div>
+  </div>
+  <script>
+    // Wait for config to load
+    function onConfigReady(cb) {
+      if (window.stylewiseConfig) cb();
+      else setTimeout(() => onConfigReady(cb), 50);
+    }
 
-    <script>
-        // Initialize Supabase client
-        const supabaseUrl = 'https://iehbnglwxtwxlveaeknp.supabase.co';
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImllaGJuZ2x3eHR3eGx2ZWFla25wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY5MTE0NTIsImV4cCI6MjA2MjQ4NzQ1Mn0.652L15y6Nz0xVEWbuIQxbFAeb7yKK7Eravs_wphI2BU';
-        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+    onConfigReady(function() {
+      const config = window.stylewiseConfig;
+      const supabase = window.supabase.createClient(config.supabase.url, config.supabase.anonKey);
+      const params = new URLSearchParams(window.location.search);
+      const container = document.getElementById('confirm-container');
+      const loader = document.getElementById('loader');
+      const title = document.getElementById('title');
+      const message = document.getElementById('message');
 
-        // Helper to get params from both query string and hash fragment
-        function getParamFromUrl(name) {
-            // Try query string first
-            const urlParams = new URLSearchParams(window.location.search);
-            let value = urlParams.get(name);
-            if (value) return value;
-            // Try hash fragment
-            if (window.location.hash) {
-                const hashParams = new URLSearchParams(window.location.hash.substring(1));
-                return hashParams.get(name);
+      function setState(state, msgType) {
+        loader.style.display = state === 'loading' ? 'block' : 'none';
+        title.textContent = config.messages[msgType].title;
+        message.textContent = config.messages[msgType].message;
+        title.className = 'title ' + (msgType === 'success' ? 'success' : msgType === 'error' ? 'error' : '');
+      }
+
+      setState('loading', 'loading');
+
+      // Supabase expects access_token and type=email in the URL for confirmation
+      const accessToken = params.get('access_token');
+      const type = params.get('type');
+
+      if (type === 'signup' && accessToken) {
+        supabase.auth.exchangeCodeForSession(accessToken)
+          .then(({ error }) => {
+            if (error) {
+              setState('error', 'error');
+            } else {
+              setState('success', 'success');
             }
-            return null;
-        }
-
-        // Get all possible params
-        const accessToken = getParamFromUrl('access_token');
-        const refreshToken = getParamFromUrl('refresh_token');
-        const type = getParamFromUrl('type');
-        const token = getParamFromUrl('token') || getParamFromUrl('token_hash');
-
-        function startConfirmation() {
-            showState('loading');
-            confirmEmail();
-        }
-
-        // Handle email confirmation for both magic link/session and legacy OTP
-        async function confirmEmail() {
-            try {
-                if (type === 'signup' && accessToken && refreshToken) {
-                    // New magic link/session flow
-                    const { data, error } = await supabase.auth.setSession({
-                        access_token: accessToken,
-                        refresh_token: refreshToken
-                    });
-                    if (error) throw error;
-                    showState('success');
-                    return;
-                }
-                // Fallback to legacy OTP flow
-                if (token) {
-                    const { data, error } = await supabase.auth.verifyOtp({
-                        token_hash: token,
-                        type: 'email'
-                    });
-                    if (error) {
-                        if (error.message && error.message.includes('already confirmed')) {
-                            showState('success');
-                            return;
-                        }
-                        if (error.message && (error.message.includes('user') || error.message.includes('not found'))) {
-                            document.getElementById('errorDescription').textContent = 'Email not confirmed. This account does not exist or the link is invalid.';
-                            showState('error');
-                            return;
-                        }
-                        throw error;
-                    }
-                    showState('success');
-                    return;
-                }
-                document.getElementById('errorDescription').textContent = 'Missing confirmation token or session in URL. Please use the link from your email.';
-                showState('error');
-            } catch (error) {
-                console.error('Email confirmation error:', error);
-                let errorMessage = 'We couldn\'t verify your email address. This could be due to an expired or invalid link.';
-                if (error.message && error.message.includes('expired')) {
-                    errorMessage = 'This confirmation link has expired. Please request a new confirmation email.';
-                } else if (error.message && error.message.includes('invalid')) {
-                    errorMessage = 'This confirmation link is invalid. Please check your email for the correct link.';
-                } else if (error.message && error.message.includes('already confirmed')) {
-                    showState('success');
-                    return;
-                }
-                document.getElementById('errorDescription').textContent = errorMessage;
-                showState('error');
-            }
-        }
-
-        function showState(state) {
-            // Hide all states
-            document.getElementById('loadingState').classList.add('hidden');
-            document.getElementById('successState').classList.add('hidden');
-            document.getElementById('errorState').classList.add('hidden');
-            if (state === 'loading') {
-                document.getElementById('loadingState').classList.remove('hidden');
-            } else if (state === 'success') {
-                document.getElementById('successState').classList.remove('hidden');
-            } else if (state === 'error') {
-                document.getElementById('errorState').classList.remove('hidden');
-            }
-        }
-
-        // Ensure confirmEmail runs on page load
-        window.addEventListener('DOMContentLoaded', startConfirmation);
-        window.addEventListener('hashchange', startConfirmation);
-    </script>
+          })
+          .catch(() => setState('error', 'error'));
+      } else {
+        setState('error', 'invalidLink');
+      }
+    });
+  </script>
 </body>
-</html>
+</html> 
