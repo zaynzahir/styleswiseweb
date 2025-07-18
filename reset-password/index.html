@@ -332,13 +332,9 @@
         } else {
             console.log('Reset token found, form should be functional');
             
-            // Check if the token looks valid (Supabase tokens are long JWT strings)
-            const tokenToCheck = token || accessToken;
-            if (tokenToCheck && tokenToCheck.length < 50) {
-                console.warn('Token appears to be invalid (too short for Supabase JWT)');
-                document.getElementById('errorMessage').textContent = 'This reset link appears to be invalid. Please request a new password reset email.';
-                document.getElementById('errorMessage').style.display = 'block';
-            }
+            // Don't validate token length here - let the API call determine if it's valid
+            // The token might be valid even if it's shorter than expected
+            console.log('Token present, ready for password reset');
         }
 
         // Password toggle functionality
@@ -402,7 +398,15 @@
                 
                 if (recoveryError) {
                     console.error('Recovery error:', recoveryError);
-                    errorMessage.textContent = recoveryError.message || 'Invalid or expired reset link. Please request a new password reset.';
+                    
+                    // Provide more specific error messages
+                    if (recoveryError.message.includes('invalid') || recoveryError.message.includes('expired')) {
+                        errorMessage.textContent = 'This reset link is invalid or has expired. Please request a new password reset email.';
+                    } else if (recoveryError.message.includes('already been used')) {
+                        errorMessage.textContent = 'This reset link has already been used. Please request a new password reset email.';
+                    } else {
+                        errorMessage.textContent = recoveryError.message || 'Failed to verify reset link. Please try again or request a new reset link.';
+                    }
                     errorMessage.style.display = 'block';
                     return;
                 }
@@ -440,7 +444,7 @@
                 }
             } catch (err) {
                 console.error('Password reset error:', err);
-                errorMessage.textContent = err.message || 'Failed to reset password. Please try again or request a new reset link.';
+                errorMessage.textContent = 'An unexpected error occurred. Please try again or request a new reset link.';
                 errorMessage.style.display = 'block';
             }
         }
