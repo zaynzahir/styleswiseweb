@@ -248,15 +248,17 @@
             document.getElementById('loadingState').classList.add('hidden');
             document.getElementById('successState').classList.add('hidden');
             document.getElementById('errorState').classList.add('hidden');
-
-            // Show the specified state
-            document.getElementById(state + 'State').classList.remove('hidden');
+            if (state === 'loading') {
+                document.getElementById('loadingState').classList.remove('hidden');
+            } else if (state === 'success') {
+                document.getElementById('successState').classList.remove('hidden');
+            } else if (state === 'error') {
+                document.getElementById('errorState').classList.remove('hidden');
+            }
         }
 
-        // Start the confirmation process when page loads
-        document.addEventListener('DOMContentLoaded', () => {
-            confirmEmail();
-        });
+        // Ensure confirmEmail runs on page load
+        window.addEventListener('DOMContentLoaded', confirmEmail);
     </script>
 </body>
 </html>
