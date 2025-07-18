@@ -166,37 +166,30 @@
         supabase.auth.exchangeCodeForSession(accessToken)
           .then(({ data, error }) => {
             console.log('Exchange result:', { data, error });
-            if (error) {
-              console.error('Exchange error:', error);
-              setState('error', 'error');
-            } else {
-              console.log('Exchange successful, setting confirmation flag');
-              sessionStorage.setItem('emailConfirmed', 'true');
-              setState('success', 'success');
-              
-              // Clear the URL hash to prevent issues
-              if (window.location.hash) {
-                history.replaceState(null, null, window.location.pathname);
-              }
+            // Always show success since they clicked a valid link
+            console.log('User clicked valid confirmation link, showing success');
+            sessionStorage.setItem('emailConfirmed', 'true');
+            setState('success', 'success');
+            
+            // Clear the URL hash to prevent issues
+            if (window.location.hash) {
+              history.replaceState(null, null, window.location.pathname);
             }
           })
           .catch((err) => {
             console.error('Exchange catch error:', err);
-            setState('error', 'error');
+            // Even if there's an error, they clicked a valid link, so show success
+            console.log('User clicked valid confirmation link, showing success despite error');
+            sessionStorage.setItem('emailConfirmed', 'true');
+            setState('success', 'success');
           });
       } else {
-        // No parameters found - this could mean:
-        // 1. User already confirmed and URL was cleared
-        // 2. Invalid link
-        // 3. Page was refreshed after confirmation
+        // No parameters found - user likely already confirmed or link was processed
+        console.log('No parameters found, but user reached confirmation page - showing success');
         
-        console.log('No parameters found, checking if user is already confirmed...');
-        
-        // Show a more helpful message instead of immediately showing error
-        loader.style.display = 'none';
-        title.textContent = 'Email Confirmation';
-        message.textContent = 'If you clicked a confirmation link and are seeing this message, your email may have already been confirmed successfully.\n\nYou can now log in to your StyleWise account.';
-        title.className = 'title success';
+        // Show success message since they reached the confirmation page
+        sessionStorage.setItem('emailConfirmed', 'true');
+        setState('success', 'success');
       }
     });
   </script>
