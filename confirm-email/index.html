@@ -172,35 +172,51 @@
         padding: 2rem 1.5rem;
         margin: 10px;
         border-radius: 16px;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
       }
       
       .title {
         font-size: 1.8rem;
+        margin-bottom: 12px;
       }
       
       .message {
         font-size: 1rem;
+        line-height: 1.5;
+        margin-bottom: 16px;
       }
       
       .logo img {
         width: 50px;
         height: 50px;
+        border-radius: 12px;
       }
       
       .logo-text {
         font-size: 1.5rem;
+        margin-bottom: 6px;
       }
       
       .logo-subtitle {
         font-size: 0.8rem;
       }
       
-      .app-info h3 {
-        font-size: 1rem;
+      .success-icon, .error-icon {
+        width: 70px;
+        height: 70px;
+        margin-bottom: 1.25rem;
       }
       
-      .app-info p {
-        font-size: 0.85rem;
+      .success-icon svg, .error-icon svg {
+        width: 35px;
+        height: 35px;
+      }
+      
+      .loader {
+        width: 45px;
+        height: 45px;
+        margin: 1.5rem auto;
       }
     }
     
@@ -208,19 +224,42 @@
       .container {
         padding: 1.5rem 1rem;
         margin: 5px;
+        border-radius: 14px;
       }
       
       .title {
         font-size: 1.6rem;
       }
       
+      .message {
+        font-size: 0.95rem;
+      }
+      
       .logo img {
         width: 45px;
         height: 45px;
+        border-radius: 10px;
       }
       
       .logo-text {
         font-size: 1.4rem;
+      }
+      
+      .success-icon, .error-icon {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 1rem;
+      }
+      
+      .success-icon svg, .error-icon svg {
+        width: 30px;
+        height: 30px;
+      }
+      
+      .loader {
+        width: 40px;
+        height: 40px;
+        margin: 1.25rem auto;
       }
     }
   </style>

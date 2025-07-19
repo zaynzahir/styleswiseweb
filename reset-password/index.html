@@ -247,27 +247,39 @@
                 padding: 2rem 1.5rem;
                 margin: 10px;
                 border-radius: 16px;
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
             }
             .reset-title {
                 font-size: 1.8rem;
+                margin-bottom: 8px;
             }
             .reset-subtitle {
                 font-size: 1rem;
+                margin-bottom: 16px;
             }
             .reset-form {
                 padding: 2rem 1.5rem;
+                border-radius: 16px;
+                background: rgba(248, 249, 255, 0.9);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
             }
             .form-input {
                 padding: 0.875rem 1rem;
                 font-size: 0.95rem;
+                border-radius: 12px;
             }
             .btn-reset {
                 padding: 0.875rem 2rem;
                 font-size: 1rem;
+                border-radius: 12px;
+                box-shadow: 0 8px 25px rgba(102, 126, 234, 0.25);
             }
             .logo img {
                 width: 50px;
                 height: 50px;
+                border-radius: 12px;
             }
             .logo-text {
                 font-size: 1.5rem;
@@ -275,21 +287,40 @@
             .logo-subtitle {
                 font-size: 0.8rem;
             }
+            .error-message, .success-message {
+                border-radius: 12px;
+                padding: 1rem;
+                font-size: 0.9rem;
+            }
         }
         
         @media (max-width: 400px) {
             .reset-container {
                 padding: 1.5rem 1rem;
                 margin: 5px;
+                border-radius: 14px;
             }
             .reset-form {
                 padding: 1.5rem 1rem;
+                border-radius: 14px;
             }
             .reset-title {
                 font-size: 1.6rem;
             }
             .form-input {
                 padding: 0.75rem 0.875rem;
+                border-radius: 10px;
+            }
+            .btn-reset {
+                padding: 0.75rem 1.5rem;
+                border-radius: 10px;
+            }
+            .logo img {
+                width: 45px;
+                height: 45px;
+            }
+            .logo-text {
+                font-size: 1.4rem;
             }
         }
     </style>
