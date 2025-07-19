@@ -581,6 +581,60 @@
             .footer-col { margin-bottom: 20px; }
             .footer-logo { width: 36px; height: 36px; }
         }
+        .hero-image-placeholder {
+            width: 100%;
+            height: 400px;
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #f8f9ff 0%, #e8eaff 100%);
+            box-shadow: 
+                0 20px 60px rgba(102, 126, 234, 0.15),
+                0 8px 25px rgba(102, 126, 234, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(102, 126, 234, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        .hero-image-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(102, 126, 234, 0.05) 0%, 
+                rgba(118, 75, 162, 0.05) 50%,
+                rgba(255, 255, 255, 0.1) 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        .hero-image-placeholder::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, #667eea, #764ba2, #667eea);
+            border-radius: 26px;
+            z-index: -1;
+            opacity: 0.3;
+            filter: blur(8px);
+        }
+        
+        .hero-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 24px;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 <body>
@@ -600,7 +654,7 @@
         </div>
     </header>
     <div class="container">
-        <video class="hero-bg-video" src="public/zaddy.mp4" autoplay loop muted playsinline></video>
+        <video class="hero-bg-video" src="public/zaddyy.mp4" autoplay loop muted playsinline></video>
         <div class="hero-content">
             <div class="logo">StyleWise</div>
             <h1 class="hero-header">Your Digital Closet</h1>
@@ -620,7 +674,7 @@
             </div>
         </div>
         <div class="hero-image-placeholder">
-            <video class="hero-video" src="public/zaddy.mp4" autoplay loop muted playsinline></video>
+            <video class="hero-video" src="public/zaddyy.mp4" autoplay loop muted playsinline></video>
         </div>
     </div>
     <div class="steps-section">
