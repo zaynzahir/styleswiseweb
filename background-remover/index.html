@@ -266,7 +266,7 @@
                 margin: 8px 0 !important;
             }
             .download-section {
-                margin-top: 12px;
+                margin-top: 8px;
             }
         }
         @media (max-width: 500px) {
@@ -321,7 +321,7 @@
                 margin: 8px 0 !important;
             }
             .download-section {
-                margin-top: 12px;
+                margin-top: 8px;
             }
         }
     </style>
@@ -498,11 +498,17 @@
                     <div class="upload-subtext">Removing background with AI</div>
                 `;
 
-                // Send to Railway API
+                // Send to Railway API with timeout
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+
                 const apiResponse = await fetch('https://web-production-9682d.up.railway.app/remove-background', {
                     method: 'POST',
-                    body: formData
+                    body: formData,
+                    signal: controller.signal
                 });
+
+                clearTimeout(timeoutId);
 
                 if (!apiResponse.ok) {
                     throw new Error(`HTTP error! status: ${apiResponse.status}`);
@@ -540,6 +546,13 @@
             } catch (error) {
                 console.error('Error removing background:', error);
                 
+                let errorMessage = 'Failed to process image. Please try again.';
+                if (error.name === 'AbortError') {
+                    errorMessage = 'Request timed out. Please try again with a smaller image.';
+                } else if (error.message) {
+                    errorMessage = error.message;
+                }
+                
                 // Show error state
                 uploadText.textContent = 'Error Processing Image';
                 uploadSubtext.textContent = 'Please try again with a different image';
@@ -557,7 +570,7 @@
                 resetUploadArea();
                 
                 // Show error status
-                statusMessage.innerHTML = `<div class="error-message">❌ Error: ${error.message || 'Failed to process image. Please try again.'}</div>`;
+                statusMessage.innerHTML = `<div class="error-message">❌ Error: ${errorMessage}</div>`;
             }
         }
 
