@@ -105,9 +105,9 @@
         }
         .header-right { display: flex; align-items: center; }
         .background-remover-btn {
-            background: rgba(255, 255, 255, 0.9);
-            color: var(--purple-darker);
-            border: 1px solid rgba(15, 23, 42, 0.12);
+            background: var(--purple);
+            color: var(--white);
+            border: 1px solid var(--purple-dark);
             padding: 12px 24px;
             border-radius: 999px;
             font-size: 1rem;
@@ -121,8 +121,8 @@
             transform: translateZ(5px);
         }
         .background-remover-btn:hover {
-            background: var(--purple);
-            color: var(--white);
+            background: var(--white);
+            color: var(--purple);
             transform: translateY(-3px) translateZ(8px);
             box-shadow: 0 15px 35px rgba(139, 92, 246, 0.3);
         }
@@ -437,7 +437,9 @@
             <video class="header-logo-video" src="public/zaddyy.mp4" autoplay muted loop playsinline></video>
             <span class="header-title">STYLEWISE</span>
         </div>
-        <div class="header-right"></div>
+        <div class="header-right">
+            <a href="/stylewise-token" class="background-remover-btn">StyleWise Token</a>
+        </div>
     </header>
 
     <!-- Floating shapes for subtle 3D depth -->
