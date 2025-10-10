@@ -287,7 +287,12 @@
 
     onConfigReady(function() {
       const config = window.stylewiseConfig;
-      const supabase = window.supabase.createClient(config.supabase.url, config.supabase.anonKey);
+      const supabase = window.supabase.createClient(config.supabase.url, config.supabase.anonKey, {
+        auth: {
+          redirectTo: config.urls.confirmEmail,
+          flowType: 'pkce'
+        }
+      });
       const container = document.getElementById('confirm-container');
       const loader = document.getElementById('loader');
       const title = document.getElementById('title');

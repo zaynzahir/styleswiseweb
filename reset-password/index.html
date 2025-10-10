@@ -365,11 +365,16 @@
     </div>
     
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="../supabase-config.js"></script>
     <script>
-        // Initialize Supabase client
-        const supabaseUrl = 'https://iehbnglwxtwxlveaeknp.supabase.co';
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImllaGJuZ2x3eHR3eGx2ZWFla25wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY5MTE0NTIsImV4cCI6MjA2MjQ4NzQ1Mn0.652L15y6Nz0xVEWbuIQxbFAeb7yKK7Eravs_wphI2BU';
-        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+        // Initialize Supabase client with website configuration
+        const config = window.supabaseConfig.website;
+        const supabase = window.supabase.createClient(config.url, config.anonKey, {
+            auth: {
+                redirectTo: config.redirectTo,
+                flowType: 'pkce'
+            }
+        });
 
         // Get URL parameters
         const urlParams = new URLSearchParams(window.location.search);
