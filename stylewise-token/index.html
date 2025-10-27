@@ -249,6 +249,56 @@
             transform: translateY(-4px);
         }
         
+        /* Contract Section */
+        .contract-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+        }
+        
+        .contract-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            border-radius: 16px;
+            padding: 32px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            max-width: 600px;
+            width: 100%;
+        }
+        
+        .contract-box:hover {
+            border-color: var(--purple);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
+            transform: translateY(-4px);
+        }
+        
+        .contract-label {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--purple-light);
+            margin-bottom: 16px;
+        }
+        
+        .contract-address {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--white);
+            background: rgba(0, 0, 0, 0.3);
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            word-break: break-all;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .contract-network {
+            font-size: 1rem;
+            color: var(--gray-light);
+            font-weight: 600;
+        }
+
         /* Token Stats */
         .token-stats {
             display: grid;
@@ -696,6 +746,18 @@
                     <div class="stat-number">DEX</div>
                     <div class="stat-label">Buy on DEX</div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contract Section -->
+    <section class="section">
+        <h2 class="section-title">Contract Address</h2>
+        <div class="contract-container">
+            <div class="contract-box">
+                <div class="contract-label">StyleWise Token Contract</div>
+                <div class="contract-address" id="contractAddress"></div>
+                <div class="contract-network">Network: Solana</div>
             </div>
         </div>
     </section>
