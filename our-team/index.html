@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Team | StyleWise - AI Fashion Technology</title>
+    <meta name="description" content="Meet the StyleWise team - passionate innovators building the future of AI-powered digital fashion and Web3 technology.">
+    <meta name="keywords" content="StyleWise team, AI fashion, digital fashion, Web3, technology team, fashion innovation">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#6A0DAD">
+    <link rel="canonical" href="https://www.styleswise.io/our-team/">
+    <link rel="icon" href="/logo/stylwise.PNG" type="image/png">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Our Team - StyleWise AI Fashion Technology">
+    <meta property="og:description" content="Meet the passionate innovators building the future of AI-powered digital fashion and Web3 technology.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.styleswise.io/our-team/">
+    <meta property="og:image" content="https://www.styleswise.io/og-image.jpg">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Our Team - StyleWise AI Fashion Technology">
+    <meta name="twitter:description" content="Meet the passionate innovators building the future of AI-powered digital fashion and Web3 technology.">
+    <meta name="twitter:image" content="https://www.styleswise.io/twitter-card.jpg">
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1359374798115109"
+     crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --purple: #8B5CF6;
+            --purple-light: #A78BFA;
+            --purple-lighter: #C4B5FD;
+            --purple-dark: #7C3AED;
+            --purple-darker: #6D28D9;
+            --orange: #FF6B3C;
+            --white: #FFFFFF;
+            --white-soft: #FAFAFA;
+            --gray-light: #F3F4F6;
+            --gray-medium: #E5E7EB;
+            --black: #1F2937;
+            --text-primary: #0F172A;
+            --text-secondary: #334155;
+            --shadow-3d: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            --shadow-purple: 0 20px 60px rgba(139, 92, 246, 0.3);
+            --shadow-orange: 0 12px 30px rgba(255, 111, 60, 0.35);
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 35%, #16213e 100%);
+            min-height: 100vh;
+            color: var(--white);
+            overflow-x: hidden;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+        }
+        
+        h1, h2, h3 { font-family: 'Montserrat', sans-serif; }
+        
+        /* Background Effects */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: -20vh -10vw -20vh -10vw;
+            background: 
+                radial-gradient(1200px 800px at 10% 10%, rgba(139, 92, 246, 0.15), transparent 50%),
+                radial-gradient(900px 700px at 90% 20%, rgba(139, 92, 246, 0.08), transparent 55%),
+                radial-gradient(1200px 900px at 50% 100%, rgba(167, 139, 250, 0.1), transparent 60%),
+                linear-gradient(160deg, #0a0a0a 0%, #1a1a2e 60%, #16213e 100%);
+            z-index: -2;
+            transform: translateZ(-10px);
+        }
+        
+        /* Floating Particles */
+        .particles {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--purple-light);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+            opacity: 0.6;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.6; }
+            50% { transform: translateY(-20px) rotate(180deg); opacity: 1; }
+        }
+        
+        /* Header */
+        .main-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+            padding: 0 32px;
+            min-height: 80px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-left { display: flex; align-items: center; gap: 12px; }
+        .header-logo { width: 48px; height: 48px; border-radius: 12px; object-fit: cover; box-shadow: var(--shadow-3d); }
+        .header-title { 
+            font-size: 1.6rem; font-weight: 800; color: var(--white); letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .header-right { display: flex; align-items: center; }
+        .back-button {
+            background: var(--purple);
+            color: var(--white);
+            border: 1px solid var(--purple-dark);
+            padding: 12px 24px;
+            border-radius: 999px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            display: inline-block;
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-3d);
+        }
+        .back-button:hover {
+            background: var(--white);
+            color: var(--purple);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(139, 92, 246, 0.3);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 32px 80px;
+            position: relative;
+        }
+        
+        .hero-content {
+            max-width: 1000px;
+            z-index: 10;
+        }
+        
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(139, 92, 246, 0.2);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--purple-light);
+            margin-bottom: 24px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--white) 0%, var(--purple-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 24px;
+            line-height: 1.1;
+            text-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--gray-light);
+            margin-bottom: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 32px;
+        }
+
+        /* Team Stats */
+        .team-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin-bottom: 80px;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 32px 24px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--purple);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--purple-light);
+            margin-bottom: 8px;
+        }
+        
+        .stat-label {
+            font-size: 1.1rem;
+            color: var(--gray-light);
+            font-weight: 600;
+        }
+
+        /* Team Sections */
+        .team-section {
+            margin-bottom: 80px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .team-section:hover {
+            border-color: var(--purple);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.1);
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--white);
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, var(--white) 0%, var(--purple-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+        }
+        
+        .section-content {
+            color: var(--gray-light);
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+        
+        .section-content h3 {
+            color: var(--white);
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 24px 0 12px 0;
+        }
+        
+        .section-content ul {
+            margin: 16px 0;
+            padding-left: 24px;
+        }
+        
+        .section-content li {
+            margin: 8px 0;
+            position: relative;
+        }
+        
+        .section-content li::marker {
+            color: var(--purple);
+        }
+        
+        .highlight-box {
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 24px 0;
+        }
+        
+        .highlight-box h4 {
+            color: var(--purple-light);
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        /* Values Grid */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin-top: 40px;
+        }
+        
+        .value-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 32px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .value-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--purple);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
+        }
+        
+        .value-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--purple) 0%, var(--purple-dark) 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 20px;
+            box-shadow: var(--shadow-purple);
+        }
+        
+        .value-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 12px;
+        }
+        
+        .value-description {
+            color: var(--gray-light);
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        .footer { 
+            background: rgba(0, 0, 0, 0.8); border-radius: 0; 
+            box-shadow: 0 -8px 32px 0 rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1); 
+            width: 100%; margin: 0 auto 0 auto; padding: 0; 
+            border-top: 1px solid rgba(139, 92, 246, 0.2); 
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            margin-top: auto;
+        }
+        .footer-main { display: grid; grid-template-columns: 2fr 1fr 2fr; gap: 40px; align-items: flex-start; padding: 40px 32px 16px 32px; margin-bottom: 0; }
+        .footer-logo { width: 44px; height: 44px; border-radius: 10px; margin-bottom: 10px; object-fit: cover; }
+        .footer-desc { color: var(--gray-light); font-size: 1rem; margin-bottom: 10px; line-height: 1.4; }
+        .footer-title { font-weight: 800; color: var(--white); margin-bottom: 10px; font-size: 1.1rem; }
+        .footer-links a, .footer-contact a { display: block; color: var(--gray-light); margin-bottom: 6px; text-decoration: none; font-size: 1rem; }
+        .footer-links a:hover, .footer-contact a:hover { color: var(--purple-light); text-decoration: none; }
+        .footer-socials-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+        .footer-social-item { display: inline-flex; align-items: center; gap: 8px; }
+        .footer-social-icon { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: rgba(139, 92, 246, 0.2); border-radius: 8px; color: var(--purple-light); }
+        .footer-social-icon.instagram { background: var(--purple); border: 1px solid var(--purple-dark); color: white; }
+        .footer-social-icon.instagram img { width: 18px; height: 18px; filter: brightness(0) saturate(100%) invert(100%); }
+        .footer-social-icon svg { width: 18px; height: 18px; display: block; color: inherit; fill: currentColor; stroke: none; }
+        .footer-socials-row a.footer-social-icon { text-decoration: none; border: 1px solid rgba(139,92,246,0.3); }
+        .footer-bottom { text-align: center; color: var(--gray-light); font-size: 0.95rem; margin-top: 0; padding-bottom: 0; }
+        .footer-social-text { color: var(--gray-light); font-size: 0.9rem; }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .hero-title { font-size: 3rem; }
+            .section-title { font-size: 2rem; }
+            .container { padding: 60px 16px; }
+            .team-section { padding: 24px; }
+            .values-grid { grid-template-columns: 1fr; }
+            .team-stats { grid-template-columns: repeat(2, 1fr); }
+        }
+        
+        @media (max-width: 600px) {
+            .hero-title { font-size: 2.5rem; }
+            .main-header { padding: 0 16px; }
+            .team-stats { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Particles -->
+    <div class="particles">
+        <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+        <div class="particle" style="left: 20%; animation-delay: 1s;"></div>
+        <div class="particle" style="left: 30%; animation-delay: 2s;"></div>
+        <div class="particle" style="left: 40%; animation-delay: 0.5s;"></div>
+        <div class="particle" style="left: 50%; animation-delay: 1.5s;"></div>
+        <div class="particle" style="left: 60%; animation-delay: 3s;"></div>
+        <div class="particle" style="left: 70%; animation-delay: 0.8s;"></div>
+        <div class="particle" style="left: 80%; animation-delay: 2.5s;"></div>
+        <div class="particle" style="left: 90%; animation-delay: 1.8s;"></div>
+    </div>
+
+    <header class="main-header">
+        <div class="header-left">
+            <img src="/logo/stylwise.PNG" alt="StyleWise Logo" class="header-logo">
+            <span class="header-title">STYLEWISE</span>
+        </div>
+        <div class="header-right">
+            <a href="/stylewise-token" class="back-button">Back to Token</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span>👥</span>
+                Meet Our Team
+            </div>
+            <h1 class="hero-title">Our Team</h1>
+            <p class="hero-subtitle">
+                Passionate innovators building the future of AI-powered digital fashion and Web3 technology
+            </p>
+        </div>
+    </section>
+
+    <div class="container">
+        <!-- Team Stats -->
+        <div class="team-stats">
+            <div class="stat-card">
+                <div class="stat-number">10+</div>
+                <div class="stat-label">Team Members</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">5</div>
+                <div class="stat-label">Countries</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">5+</div>
+                <div class="stat-label">Years Combined Experience</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Innovation</div>
+            </div>
+        </div>
+
+        <!-- About Our Team -->
+        <div class="team-section">
+            <h2 class="section-title">About Our Team</h2>
+            <div class="section-content">
+                <p>At StyleWise, we're a diverse group of passionate innovators, engineers, designers, and visionaries united by a common goal: revolutionizing the fashion industry through cutting-edge AI technology and Web3 innovation.</p>
+                
+                <p>Our team combines deep expertise in artificial intelligence, computer vision, blockchain technology, and fashion design to create solutions that bridge the gap between digital and physical fashion experiences.</p>
+
+                <div class="highlight-box">
+                    <h4>Our Mission</h4>
+                    <p>To democratize fashion technology and empower users to express their unique style through AI-powered tools, virtual try-on experiences, and a sustainable Web3 ecosystem that rewards creativity and engagement.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Core Expertise -->
+        <div class="team-section">
+            <h2 class="section-title">Core Expertise</h2>
+            <div class="section-content">
+                <h3>Technical Leadership</h3>
+                <p>Our engineering team brings together experts from leading tech companies and research institutions, with deep experience in:</p>
+                <ul>
+                    <li>Machine Learning and Computer Vision</li>
+                    <li>Augmented Reality and Virtual Try-On Technology</li>
+                    <li>Blockchain and Web3 Development</li>
+                    <li>Mobile App Development and User Experience</li>
+                    <li>Cloud Infrastructure and Scalability</li>
+                </ul>
+
+                <h3>Fashion & Design Innovation</h3>
+                <p>Our creative team includes fashion designers, stylists, and trend analysts who understand both the technical and aesthetic aspects of digital fashion:</p>
+                <ul>
+                    <li>Fashion Design and Trend Analysis</li>
+                    <li>3D Modeling and Digital Asset Creation</li>
+                    <li>User Experience and Interface Design</li>
+                    <li>Brand Strategy and Marketing</li>
+                </ul>
+
+                <h3>Business & Strategy</h3>
+                <p>Our business team combines startup experience with deep industry knowledge to drive growth and partnerships:</p>
+                <ul>
+                    <li>Strategic Planning and Business Development</li>
+                    <li>Partnership and Ecosystem Development</li>
+                    <li>Community Building and User Engagement</li>
+                    <li>Financial Planning and Operations</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Our Values -->
+        <div class="team-section">
+            <h2 class="section-title">Our Values</h2>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">🚀</div>
+                    <h3 class="value-title">Innovation</h3>
+                    <p class="value-description">We constantly push the boundaries of what's possible in fashion technology, always seeking new ways to enhance user experiences and solve real-world problems.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🤝</div>
+                    <h3 class="value-title">Collaboration</h3>
+                    <p class="value-description">We believe the best solutions come from diverse teams working together, sharing knowledge, and supporting each other's growth and development.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🎯</div>
+                    <h3 class="value-title">User-Centric</h3>
+                    <p class="value-description">Every decision we make is guided by our commitment to creating meaningful value for our users and the broader fashion community.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🌱</div>
+                    <h3 class="value-title">Sustainability</h3>
+                    <p class="value-description">We're committed to building technology that promotes sustainable fashion practices and reduces environmental impact in the industry.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🔒</div>
+                    <h3 class="value-title">Privacy & Security</h3>
+                    <p class="value-description">We prioritize user privacy and data security, implementing robust measures to protect user information and maintain trust.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🌟</div>
+                    <h3 class="value-title">Excellence</h3>
+                    <p class="value-description">We strive for excellence in everything we do, from code quality to user experience, always aiming to exceed expectations.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Join Our Mission -->
+        <div class="team-section">
+            <h2 class="section-title">Join Our Mission</h2>
+            <div class="section-content">
+                <p>We're always looking for talented individuals who share our passion for innovation and want to be part of building the future of fashion technology.</p>
+                
+                <div class="highlight-box">
+                    <h4>Open Positions</h4>
+                    <p>We're currently seeking passionate individuals in AI/ML engineering, mobile development, fashion design, and community management. If you're interested in joining our mission, we'd love to hear from you.</p>
+                </div>
+
+                <p>At StyleWise, we believe that the future of fashion is digital, sustainable, and community-driven. Join us in creating that future.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="footer-main">
+            <div class="footer-col footer-brand">
+                <img src="/logo/stylwise.PNG" alt="StyleWise Logo" class="footer-logo">
+                <div class="footer-desc">StyleWise is your personal fashion assistant, helping you discover, organize, and elevate your wardrobe with AI-powered recommendations.</div>
+            </div>
+            <div class="footer-col footer-links">
+                <div class="footer-title">Quick Links</div>
+                <a href="mailto:support@styleswise.io">Customer Support</a>
+                <a href="/terms">Terms of Service</a>
+                <a href="/privacy">Privacy Policy</a>
+            </div>
+            <div class="footer-col footer-social">
+                <div class="footer-title">Social</div>
+                <div class="footer-socials-row">
+                    <div class="footer-social-item">
+                        <a href="https://www.instagram.com/stylewise.app?igsh=MXVkZ3czMjFrOXhjag==" target="_blank" title="Instagram" class="footer-social-icon instagram">
+                            <img src="/logo/icons8-instagram-50.png" alt="Instagram" width="18" height="18">
+                        </a>
+                        <span class="footer-social-text">Instagram</span>
+                    </div>
+                    <div class="footer-social-item">
+                        <a href="https://www.tiktok.com/@stylewise.app?_t=ZS-8xzygoXt7Hl&_r=1" target="_blank" title="TikTok" class="footer-social-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05 0-12.07z"/></svg>
+                        </a>
+                        <span class="footer-social-text">TikTok</span>
+                    </div>
+                    <div class="footer-social-item">
+                        <a href="https://x.com/stylewise_app?s=21" target="_blank" title="X" class="footer-social-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        </a>
+                        <span class="footer-social-text">X</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">&copy; 2025 StyleWise. All rights reserved.</div>
+    </div>
+
+    <script>
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.team-section, .stat-card, .value-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
